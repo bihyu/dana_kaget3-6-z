@@ -1,10 +1,10 @@
-# HTML content with disturbing effect and a jumpscare at the end
+# Updated HTML with manual audio play fallback for mobile browsers
 
-jumpscare_html = """
+jumpscare_audio_fixed = """
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LAG MODE 😵</title>
+  <title>Jumpscare Prank 😈</title>
   <style>
     body {
       background-color: black;
@@ -58,7 +58,7 @@ jumpscare_html = """
 
   <div id="jumpscare">
     <img src="https://play-lh.googleusercontent.com/qBiLTYKuDA9aecK01rKoBYMp19lLOSq3xJvLkjTxlLCOJ_blR9ZPvBUblRaKFbDQ8P29" alt="SCREAM" />
-    <audio id="scream" src="Jumpscare Sound.mp3" autoplay></audio>
+    <audio id="scream" src="Jumpscare Sound.mp3" preload="auto"></audio>
     <button id="reload-btn" onclick="location.reload()">Main Lagi 😄</button>
   </div>
 
@@ -78,7 +78,6 @@ jumpscare_html = """
     }, 150);
 
     setTimeout(() => {
-      // start disturbing background flicker
       setInterval(() => {
         document.body.style.backgroundColor = 
           document.body.style.backgroundColor === "black" ? "red" : "black";
@@ -86,10 +85,14 @@ jumpscare_html = """
     }, 10000);
 
     setTimeout(() => {
-      // show jumpscare
       clearInterval(spammer);
       jumpscare.style.display = "flex";
-      scream.play();
+      scream.play().catch(() => {
+        // fallback if autoplay is blocked
+        document.body.addEventListener('click', () => {
+          scream.play();
+        }, { once: true });
+      });
       reloadBtn.style.display = "block";
     }, 15000);
   </script>
@@ -97,9 +100,9 @@ jumpscare_html = """
 </html>
 """
 
-# Save HTML file
+# Save new HTML file
 file_path = "/mnt/data/index.html"
 with open(file_path, "w", encoding="utf-8") as f:
-    f.write(jumpscare_html)
+    f.write(jumpscare_audio_fixed)
 
 file_path
