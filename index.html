@@ -1,6 +1,6 @@
-# Updated HTML with manual audio play fallback for mobile browsers
+# Update HTML file to use Vocaroo-hosted audio file for jumpscare
 
-jumpscare_audio_fixed = """
+jumpscare_with_vocaroo = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +58,7 @@ jumpscare_audio_fixed = """
 
   <div id="jumpscare">
     <img src="https://play-lh.googleusercontent.com/qBiLTYKuDA9aecK01rKoBYMp19lLOSq3xJvLkjTxlLCOJ_blR9ZPvBUblRaKFbDQ8P29" alt="SCREAM" />
-    <audio id="scream" src="Jumpscare Sound.mp3" preload="auto"></audio>
+    <audio id="scream" src="https://media.vocaroo.com/1euDKKV6e3RY" preload="auto"></audio>
     <button id="reload-btn" onclick="location.reload()">Main Lagi 😄</button>
   </div>
 
@@ -88,7 +88,6 @@ jumpscare_audio_fixed = """
       clearInterval(spammer);
       jumpscare.style.display = "flex";
       scream.play().catch(() => {
-        // fallback if autoplay is blocked
         document.body.addEventListener('click', () => {
           scream.play();
         }, { once: true });
@@ -100,9 +99,9 @@ jumpscare_audio_fixed = """
 </html>
 """
 
-# Save new HTML file
+# Save updated HTML file
 file_path = "/mnt/data/index.html"
 with open(file_path, "w", encoding="utf-8") as f:
-    f.write(jumpscare_audio_fixed)
+    f.write(jumpscare_with_vocaroo)
 
 file_path
